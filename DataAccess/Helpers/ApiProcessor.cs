@@ -12,6 +12,7 @@ namespace DataAccess.Helpers
 
         public static async Task<List<EmployeeModel>> LoadEmployeeInformation()
         {
+            ApiHelper.InitializeClient();
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)

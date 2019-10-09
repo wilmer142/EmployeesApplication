@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Helpers\ApiHelper.cs" />
     <Compile Include="Helpers\ApiProcessor.cs" />
-    <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

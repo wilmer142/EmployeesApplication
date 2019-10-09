@@ -9,9 +9,11 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BusinessLogic.Controllers
 {
+    [EnableCors(origins: "http://localhost:63935", headers: "*", methods: "*")]
     public class EmployeesController : ApiController
     {
         public async Task<List<EmployeeViewModel>> Get()
@@ -27,7 +29,7 @@ namespace BusinessLogic.Controllers
         public async Task<EmployeeViewModel> Get(int id)
         {
             var employees = await Get();
-            return employees.First(x => x.Id.Equals(id));
+            return employees.FirstOrDefault(x => x.Id == id);
         }
     }
 }

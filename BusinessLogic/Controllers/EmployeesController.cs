@@ -1,39 +1,46 @@
-﻿using System;
+﻿using BusinessLogic.Enumerations;
+using BusinessLogic.Factories;
+using BusinessLogic.Models;
+using DataAccess.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BusinessLogic.Controllers
 {
     public class EmployeesController : ApiController
     {
-        // GET: api/Employees
-        public IEnumerable<string> Get()
+        public async Task<List<EmployeeViewModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var employees = await ApiProcessor.LoadEmployeeInformation();
+            List<EmployeeViewModel> result = new List<EmployeeViewModel>();
+            foreach (var employee in employees)
+            {
+                var employeeViewModel = new EmployeeViewModel
+                {
+                    Id = employee.Id,
+                    ContractTypeName = employee.ContractTypeName,
+                    HourlySalary = employee.HourlySalary,
+                    MonthlySalary = employee.MonthlySalary,
+                    Name = employee.Name,
+                    RoleDescription = employee.RoleDescription,
+                    RoleName = employee.RoleName,
+                    AnnualSalary = CalculateAnnualSalary.CalculateSalary((EContractType)Enum.Parse(typeof(EContractType), employee.ContractTypeName, true), employee.HourlySalary, employee.MonthlySalary)
+                };
+
+                result.Add(employeeViewModel);
+            }
+            return result;
         }
 
-        // GET: api/Employees/5
-        public string Get(int id)
+        public async Task<EmployeeViewModel> Get(int id)
         {
-            return "value";
-        }
-
-        // POST: api/Employees
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Employees/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Employees/5
-        public void Delete(int id)
-        {
+            var employees = await Get();
+            return employees.First(x => x.Id.Equals(id));
         }
     }
 }

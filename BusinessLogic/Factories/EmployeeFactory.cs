@@ -10,10 +10,10 @@ namespace BusinessLogic.Factories
 {
     public static class EmployeeFactory
     {
-        public static IEmployee Factory(EContractType contractType)
+        public static IEmployee Factory(EContractType contractType, double hourlySalary, double monthlySalary)
         {
-            if (contractType == EContractType.HourlySalaryEmployee) return new HourlySalaryEmployee();
-            if (contractType == EContractType.MonthlySalaryEmployee) return new MonthlySalaryEmployee();
+            if (contractType == EContractType.HourlySalaryEmployee) return new HourlySalaryEmployee(hourlySalary);
+            if (contractType == EContractType.MonthlySalaryEmployee) return new MonthlySalaryEmployee(monthlySalary);
 
             throw new ApplicationException();
         }

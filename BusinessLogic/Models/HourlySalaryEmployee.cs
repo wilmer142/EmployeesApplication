@@ -8,9 +8,16 @@ namespace BusinessLogic.Models
 {
     public class HourlySalaryEmployee : IEmployee
     {
-        public double CalculateAnnualSalary(double salary)
+        public double Salary { set; get; }
+
+        public HourlySalaryEmployee(double salary)
         {
-            return 120 * salary * 12;
+            Salary = salary;
+        }
+
+        public double CalculateAnnualSalary()
+        {
+            return 120 * Salary * 12;
         }
     }
 }

@@ -7,6 +7,8 @@ namespace BusinessLogic.Interfaces
 {
     public interface IEmployee
     {
-        double CalculateAnnualSalary(double salary);
+        double Salary { set; get; }
+
+        double CalculateAnnualSalary();
     }
 }

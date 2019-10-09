@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Interfaces\IEmployee.cs" />
     <Compile Include="Models\CalculateAnnualSalary.cs" />
+    <Compile Include="Models\EmployeeViewModel.cs" />
     <Compile Include="Models\HourlySalaryEmployee.cs" />
     <Compile Include="Models\MonthlySalaryEmployee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,6 +132,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{666604FE-68EA-4306-BFD8-E13BDED31361}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

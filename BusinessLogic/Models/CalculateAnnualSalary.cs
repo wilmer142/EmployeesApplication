@@ -9,10 +9,10 @@ namespace BusinessLogic.Models
 {
     public static class CalculateAnnualSalary
     {
-        static double CalculateSalary(EContractType contractType, double salary)
+        public static double CalculateSalary(EContractType contractType, double hourlySalary, double monthlySalary)
         {
-            var calculateSalaryFactory = EmployeeFactory.Factory(contractType);
-            return calculateSalaryFactory.CalculateAnnualSalary(salary);
+            var calculateSalaryFactory = EmployeeFactory.Factory(contractType, hourlySalary, monthlySalary);
+            return calculateSalaryFactory.CalculateAnnualSalary();
         }
     }
 }

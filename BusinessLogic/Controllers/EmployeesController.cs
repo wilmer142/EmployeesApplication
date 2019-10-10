@@ -16,9 +16,18 @@ namespace BusinessLogic.Controllers
     [EnableCors(origins: "http://localhost:63935", headers: "*", methods: "*")]
     public class EmployeesController : ApiController
     {
-        public async Task<List<EmployeeViewModel>> Get()
+        List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+
+        public EmployeesController() { }
+
+        public EmployeesController(List<EmployeeViewModel> employees)
         {
-            List<EmployeeViewModel> employees = await ApiProcessor.LoadEmployeeInformation<EmployeeViewModel>();
+            this.employees = employees;
+        }
+
+        public async Task<IEnumerable<EmployeeViewModel>> GetAllEmployeesAsync()
+        {
+            employees = await ApiProcessor.LoadEmployeeInformation<EmployeeViewModel>();
             foreach (var employee in employees)
             {
                 employee.AnnualSalary = CalculateAnnualSalary.CalculateSalary((EContractType)Enum.Parse(typeof(EContractType), employee.ContractTypeName, true), employee.HourlySalary, employee.MonthlySalary);
@@ -26,10 +35,16 @@ namespace BusinessLogic.Controllers
             return employees;
         }
 
-        public async Task<EmployeeViewModel> Get(int id)
+
+        public async Task<IHttpActionResult> GetEmployeeAsync(int id)
         {
-            var employees = await Get();
-            return employees.FirstOrDefault(x => x.Id == id);
+            var employees = await GetAllEmployeesAsync();
+            var employee = employees.FirstOrDefault(x => x.Id == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return Ok(employee);
         }
     }
 }

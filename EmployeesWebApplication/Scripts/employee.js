@@ -42,7 +42,10 @@
                 }
             },
             error: function (xhr) {
-                console.log(xhr.responseText);
+                if (xhr.status === 404 ) {
+                    $employees.html($('<div>', { "class": 'alert alert-warning', "role": 'alert', html: "No employees has been found" }));
+                    return;
+                }
                 $employees.html($('<div>', { "class": 'alert alert-warning', "role": 'alert', html: "An error has ocurred" }));
             }
         });

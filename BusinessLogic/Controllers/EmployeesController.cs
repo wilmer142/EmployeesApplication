@@ -27,7 +27,12 @@ namespace BusinessLogic.Controllers
 
         public async Task<IEnumerable<EmployeeViewModel>> GetAllEmployeesAsync()
         {
-            employees = await ApiProcessor.LoadEmployeeInformation<EmployeeViewModel>();
+            if (employees == null || !employees.Any())
+            {
+                employees = await ApiProcessor.LoadEmployeeInformation<EmployeeViewModel>();
+            }
+
+
             foreach (var employee in employees)
             {
                 employee.AnnualSalary = CalculateAnnualSalary.CalculateSalary((EContractType)Enum.Parse(typeof(EContractType), employee.ContractTypeName, true), employee.HourlySalary, employee.MonthlySalary);
